@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/view_main/current.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,7 +34,13 @@ class _HomePage extends State<HomePage> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Color(0xff00539c),
+            elevation: 0,
             bottom: TabBar(
+              unselectedLabelColor: Colors.white,
+              indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Color(0xffffd662)),
               tabs: [
                 DefaultTextStyle(
                   style: GoogleFonts.raleway(color: Colors.white),

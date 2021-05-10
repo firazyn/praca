@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:praca/view_main/current_tile.dart';
 
 class Current extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _Current extends State<Current> {
             width: MediaQuery.of(context).size.width,
             color: Color(0xff00539c),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18),
+              padding: EdgeInsets.symmetric(horizontal: 35),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -92,36 +93,17 @@ class _Current extends State<Current> {
               ),
             ),
           ),
-          Expanded(
+          Container(
+            color: Color(0xff00539c),
             child: Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(18.0),
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  ListTile(
-                    leading: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "weather_status_icons/Sunnysmall.png",
-                          width: 40,
-                          height: 40,
-                        ),
-                      ],
-                    ),
-                    title: Text(
-                      "Feels Like",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w600),
-                    ),
-                    subtitle: Text(
-                      "27°C",
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.orange),
-                    ),
-                  ),
+                  Tile("Thermo.png", "Feels Like", "35"),
+                  Tile("Humid.png", "Humidity", "71%"),
+                  Tile("Percipitation.png", "Percipitation", "17%"),
+                  Tile("Wind.png", "Wind Speed", "5 km/h"),
                 ],
               ),
             ),
