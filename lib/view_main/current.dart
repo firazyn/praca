@@ -93,21 +93,23 @@ class _Current extends State<Current> {
               ),
             ),
           ),
-          Container(
-            color: Color(0xff00539c),
-            child: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  Tile("Thermo.png", "Feels Like", "35"),
-                  Tile("Humid.png", "Humidity", "71%"),
-                  Tile("Percipitation.png", "Percipitation", "17%"),
-                  Tile("Wind.png", "Wind Speed", "5 km/h"),
-                ],
+          Expanded(
+            child: Container(
+              color: Color(0xff00539c),
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    Tile("Thermo.png", "Feels Like", "35"),
+                    Tile("Humid.png", "Humidity", "71%"),
+                    Tile("Percipitation.png", "Percipitation", "17%"),
+                    Tile("Wind.png", "Wind Speed", "5 km/h"),
+                  ],
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
