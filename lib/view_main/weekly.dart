@@ -22,14 +22,16 @@ class _Weekly extends State<Weekly> {
                 padding: const EdgeInsets.symmetric(
                     vertical: 75.0, horizontal: 75.0),
                 children: [
-                  Tile("Sunny.png", "Monday, May 10", "Sunny 27°C/35°C"),
+                  Tile("Sunny.png", "Monday, May 10", "Sunny", "27°C/35°C"),
+                  Tile("Sunny.png", "Tuesday, May 11", "Thunderstorm",
+                      "18°C/25°C"),
+                  Tile("Sunny.png", "Wednesday, May 12", "Cloudy", "23°C/30°C"),
+                  Tile("Sunny.png", "Thursday, May 13", "Light Rain",
+                      "20°C/29°C"),
                   Tile(
-                      "Sunny.png", "Tuesday, May 11", "Thunderstorm 18°C/25°C"),
-                  Tile("Sunny.png", "Wednesday, May 12", "Cloudy 23°C/30°C"),
-                  Tile("Sunny.png", "Thursday, May 13", "Light Rain 20°C/29°C"),
-                  Tile("Sunny.png", "Friday, May 14", "Heavy Rain 17°C/26°C"),
-                  Tile("Sunny.png", "Saturday, May 15", "Sunny 29°C/40°C"),
-                  Tile("Sunny.png", "Sunday, May 16", "Cloudy 25°C/30°C"),
+                      "Sunny.png", "Friday, May 14", "Heavy Rain", "17°C/26°C"),
+                  Tile("Sunny.png", "Saturday, May 15", "Sunny", "29°C/40°C"),
+                  Tile("Sunny.png", "Sunday, May 16", "Cloudy", "25°C/30°C"),
                 ],
               ),
             ),

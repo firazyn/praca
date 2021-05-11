@@ -28,27 +28,27 @@ class _Current extends State<Current> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      DefaultTextStyle(
-                        style: GoogleFonts.montserrat(color: Colors.white),
-                        child: Text(
-                          //Temperature
-                          "25°C",
-                          style: TextStyle(
+                      Text(
+                        //Temperature
+                        "25°C",
+                        style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
                             fontSize: 30.0,
                             fontWeight: FontWeight.w600,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                      DefaultTextStyle(
-                        style: GoogleFonts.raleway(color: Colors.white),
-                        child: Padding(
-                          padding: EdgeInsets.only(bottom: 10.0),
-                          child: Text(
-                            //Location
-                            "Way Kanan",
-                            style: TextStyle(
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        child: Text(
+                          //Location
+                          "Way Kanan",
+                          style: GoogleFonts.raleway(
+                            textStyle: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.w300,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -75,14 +75,14 @@ class _Current extends State<Current> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 30.0),
-                        child: DefaultTextStyle(
-                          style: GoogleFonts.montserrat(color: Colors.white),
-                          child: Text(
-                            //Weather Status
-                            "Sunny",
-                            style: TextStyle(
+                        child: Text(
+                          //Weather Status
+                          "Sunny",
+                          style: GoogleFonts.raleway(
+                            textStyle: TextStyle(
                               fontSize: 25.0,
-                              fontWeight: FontWeight.w300,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
                             ),
                           ),
                         ),

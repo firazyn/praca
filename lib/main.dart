@@ -31,55 +31,80 @@ class HomePage extends StatefulWidget {
 class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color(0xff00539c),
-            elevation: 0,
-            bottom: TabBar(
-              unselectedLabelColor: Colors.white,
-              indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Color(0xffffd662)),
-              tabs: [
-                DefaultTextStyle(
-                  style: GoogleFonts.raleway(color: Colors.white),
-                  child: Text(
-                    "CURRENT",
-                  ),
-                ),
-                DefaultTextStyle(
-                  style: GoogleFonts.raleway(color: Colors.white),
-                  child: Text(
-                    "TODAY",
-                  ),
-                ),
-                DefaultTextStyle(
-                  style: GoogleFonts.raleway(color: Colors.white),
-                  child: Text(
-                    "WEEKLY",
-                  ),
-                ),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              Current(),
-              Today(),
-              // Center(
-              //   child: DefaultTextStyle(
-              //     style: GoogleFonts.raleway(color: Colors.black),
-              //     child: Text(
-              //       "TODAY",
-              //     ),
-              //   ),
-              // ),
-              Weekly(),
+    return DefaultTabController(
+      // child: Stack(
+      //   children: [
+      //     Current(),
+      //     Container(
+      //       child: Row(
+      //         children: [
+      //           Container(
+      //             margin: EdgeInsets.only(top: 25),
+      //             child: DefaultTextStyle(
+      //               style: GoogleFonts.raleway(color: Colors.white),
+      //               child: Text(
+      //                 "CURRENT",
+      //                 style: TextStyle(fontSize: 10),
+      //               ),
+      //             ),
+      //           ),
+      //           Container(
+      //             margin: EdgeInsets.only(top: 25, left: 10, right: 10),
+      //             child: DefaultTextStyle(
+      //               style: GoogleFonts.raleway(color: Colors.white),
+      //               child: Text(
+      //                 "TODAY",
+      //                 style: TextStyle(fontSize: 10),
+      //               ),
+      //             ),
+      //           ),
+      //           Container(
+      //             margin: EdgeInsets.only(top: 25),
+      //             child: DefaultTextStyle(
+      //               style: GoogleFonts.raleway(color: Colors.white),
+      //               child: Text(
+      //                 "WEEKLY",
+      //                 style: TextStyle(fontSize: 10),
+      //               ),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ],
+      // ),
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xff00539c),
+          elevation: 0,
+          bottom: TabBar(
+            unselectedLabelColor: Colors.white30,
+            indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.transparent),
+            tabs: [
+              Text(
+                "CURRENT",
+                style: GoogleFonts.raleway(fontSize: 12),
+              ),
+              Text(
+                "TODAY",
+                style: GoogleFonts.raleway(fontSize: 12),
+              ),
+              Text(
+                "WEEKLY",
+                style: GoogleFonts.raleway(fontSize: 12),
+              ),
             ],
           ),
+        ),
+        body: TabBarView(
+          children: [
+            Current(),
+            Today(),
+            Weekly(),
+          ],
         ),
       ),
     );

@@ -21,20 +21,23 @@ class Tile extends StatelessWidget {
           ),
         ],
       ),
-      title: DefaultTextStyle(
-        style: GoogleFonts.raleway(color: Color(0xffffd662)),
-        child: Text(
-          title,
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+      title: Text(
+        title,
+        style: GoogleFonts.raleway(
+          textStyle: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w600,
+            color: Color(0xffffd662),
+          ),
         ),
       ),
-      subtitle: DefaultTextStyle(
-        style: GoogleFonts.montserrat(color: Color(0xffffffff)),
-        child: Text(
-          info,
-          style: TextStyle(
+      subtitle: Text(
+        info,
+        style: GoogleFonts.montserrat(
+          textStyle: TextStyle(
             fontSize: 16.0,
             fontWeight: FontWeight.w600,
+            color: Colors.white,
           ),
         ),
       ),
