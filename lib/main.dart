@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/view_main/current.dart';
 import 'package:praca/view_main/weekly.dart';
+import 'package:praca/view_main/today.dart';
 
 void main() {
   runApp(MyApp());
@@ -67,14 +68,15 @@ class _HomePage extends State<HomePage> {
           body: TabBarView(
             children: [
               Current(),
-              Center(
-                child: DefaultTextStyle(
-                  style: GoogleFonts.raleway(color: Colors.black),
-                  child: Text(
-                    "TODAY",
-                  ),
-                ),
-              ),
+              Today(),
+              // Center(
+              //   child: DefaultTextStyle(
+              //     style: GoogleFonts.raleway(color: Colors.black),
+              //     child: Text(
+              //       "TODAY",
+              //     ),
+              //   ),
+              // ),
               Weekly(),
             ],
           ),
