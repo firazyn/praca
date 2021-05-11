@@ -62,7 +62,7 @@ class _Current extends State<Current> {
                       Padding(
                         padding: EdgeInsets.only(top: 35.0),
                         child: Image.asset(
-                          "weather_status_icons/Sunny.png",
+                          "assets/weather_status_icons/Sunny.png",
                           height: 75,
                           width: 75,
                         ),

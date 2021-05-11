@@ -15,7 +15,7 @@ class Tile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            "tile_icons/" + image,
+            "assets/tile_icons/" + image,
             width: 35,
             height: 35,
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/view_main/current.dart';
+import 'package:praca/view_main/weekly.dart';
 
 void main() {
   runApp(MyApp());
@@ -74,14 +75,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
               ),
-              Center(
-                child: DefaultTextStyle(
-                  style: GoogleFonts.raleway(color: Colors.black),
-                  child: Text(
-                    "WEEKLY",
-                  ),
-                ),
-              ),
+              Weekly(),
             ],
           ),
         ),
