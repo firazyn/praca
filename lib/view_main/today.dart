@@ -59,6 +59,7 @@ class _TodayState extends State<Today> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Color(0xff00539c),
       child: FutureBuilder<WeatherInfo>(
         future: futureWeather,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -70,29 +71,66 @@ class _TodayState extends State<Today> {
               // itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
+                    color: Color(0xff00539c),
                     child: GridTile(
-                  child: Card(
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          "assets/weather_status_icons/${snapshot.data.weather}.png",
-                          height: 75,
-                          width: 75,
+                      child: Card(
+                        elevation: 0,
+                        color: Color(0xff00539c),
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              "assets/weather_status_icons/${snapshot.data.weather}.png",
+                              height: 60,
+                              width: 60,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Title(
+                                color: Colors.black,
+                                child: Text(
+                                  snapshot.data.temperature.toString() + "°C",
+                                  style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              snapshot.data.weather.toString(),
+                              style: GoogleFonts.raleway(
+                                  textStyle: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 18,
+                                      color: Colors.white)),
+                            ),
+                            Text(
+                              "Min : ${snapshot.data.tempMin.toString()} °C",
+                              style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 11.8,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "Max : ${snapshot.data.tempMax.toString()} °C",
+                              style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 11.8,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Title(
-                            color: Colors.black,
-                            child: Text(snapshot.data.temperature.toString()),
-                          ),
-                        ),
-                        Text(snapshot.data.weather.toString()),
-                        Text("Min : ${snapshot.data.tempMin.toString()}"),
-                        Text("Max : ${snapshot.data.tempMax.toString()}"),
-                      ],
-                    ),
-                  ),
-                ));
+                      ),
+                    ));
               },
             );
           } else if (snapshot.hasError) {
