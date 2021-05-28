@@ -74,7 +74,7 @@ class _HomePage extends State<HomePage> {
       //     ),
       //   ],
       // ),
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xff00539c),

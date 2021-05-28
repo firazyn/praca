@@ -14,8 +14,8 @@ class _SevenDays extends State<SevenDays> {
   int temperature;
   var minTemperatureForecast = new List(7);
   var maxTemperatureForecast = new List(7);
-  String location = 'San Francisco';
-  int woeid = 2487956;
+  String location = 'Jakarta';
+  int woeid = 1047378;
   String weather = 'clear';
   String abbreviation = '';
   var abbreviationForecast = new List(7);
