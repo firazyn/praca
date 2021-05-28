@@ -12,11 +12,10 @@ Future<WeatherInfo> fetchWeather() async {
       "http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}";
 
   final response = await http.get(Uri.parse(requestUrl));
-  if (response.statusCode == 200) {
-    return WeatherInfo.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception("Error loading request URL info.");
-  }
+  return WeatherInfo.fromJson(jsonDecode(response.body));
+  // } else {
+  //   throw Exception("Error loading request URL info.");
+  // }
 }
 
 class WeatherInfo {
@@ -38,7 +37,7 @@ class WeatherInfo {
   factory WeatherInfo.fromJson(Map<String, dynamic> json) {
     return WeatherInfo(
         time: json['time'],
-        image: json['main']['icon'],
+        image: json['main']("icon"),
         weather: json['weather'][0]['description'],
         temperature: json['main']['temperature'],
         tempMin: json['main']['temp_min'],
@@ -62,8 +61,8 @@ class _TodayState extends State<Today> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder<WeatherInfo>(
+    return Container(
+      child: FutureBuilder<WeatherInfo>(
         future: futureWeather,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
@@ -80,7 +79,8 @@ class _TodayState extends State<Today> {
                       children: [
                         CircleAvatar(
                           radius: 40,
-                          backgroundImage: NetworkImage(snapshot.data['icon']),
+                          backgroundImage:
+                              NetworkImage(snapshot.data['main']['icon']),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8),
