@@ -1,6 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:praca/view_main/current_tile.dart';
+import 'package:praca/view_main/current_body.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+Future<WeatherInfo> fetchWeather() async {
+  final latitude = "-5.3745746";
+  final longitude = "105.2303276";
+  final apiKey = "87a9eb26f966eaff02e14fd9598d6862&";
+  final apiUrl =
+      "http://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&units=metric&appid=$apiKey";
+  final response = await http.get(Uri.parse(apiUrl));
+
+  if (response.statusCode == 200) {
+    return WeatherInfo.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception("Error loading request URL info.");
+  }
+}
+
+class WeatherInfo {
+  final location;
+  final weather;
+  final temp;
+  final tempFeels;
+  final humidity;
+  final windSpeed;
+
+  WeatherInfo({
+    this.location,
+    this.weather,
+    this.temp,
+    this.tempFeels,
+    this.humidity,
+    this.windSpeed,
+  });
+
+  factory WeatherInfo.fromJson(Map<String, dynamic> json) {
+    return WeatherInfo(
+      location: json['name'],
+      temp: json['main']['temp'],
+      tempFeels: json['main']['feels_like'],
+      humidity: json['main']['humidity'],
+      windSpeed: json['wind']['speed'],
+      weather: json['weather'][0]['main'],
+    );
+  }
+}
 
 class Current extends StatefulWidget {
   @override
@@ -13,104 +58,27 @@ class _Current extends State<Current> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height / 2.5,
-            width: MediaQuery.of(context).size.width,
-            color: Color(0xff00539c),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        //Temperature
-                        "25°C",
-                        style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 10.0),
-                        child: Text(
-                          //Location
-                          "Way Kanan",
-                          style: GoogleFonts.raleway(
-                            textStyle: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 35.0),
-                        child: Image.asset(
-                          "assets/weather_status_icons/Sunny.png",
-                          height: 75,
-                          width: 75,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 30.0),
-                        child: Text(
-                          //Weather Status
-                          "Sunny",
-                          style: GoogleFonts.raleway(
-                            textStyle: TextStyle(
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: Color(0xff00539c),
-              child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    Tile("Thermo.png", "Feels Like", "35"),
-                    Tile("Humid.png", "Humidity", "71%"),
-                    Tile("Percipitation.png", "Percipitation", "17%"),
-                    Tile("Wind.png", "Wind Speed", "5 km/h"),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+      body: FutureBuilder<WeatherInfo>(
+        future: fetchWeather(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return CurrentBody(
+              location: snapshot.data.location,
+              weather: snapshot.data.weather,
+              temp: snapshot.data.temp,
+              tempFeels: snapshot.data.tempFeels,
+              humidity: snapshot.data.humidity,
+              windSpeed: snapshot.data.windSpeed,
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('${snapshot.error}'),
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }

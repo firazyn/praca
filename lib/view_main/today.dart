@@ -6,16 +6,14 @@ import 'dart:async';
 import 'dart:convert';
 
 Future<WeatherInfo> fetchWeather() async {
-  final city = "Bandarlampung";
+  final latitude = "-5.3745746";
+  final longitude = "105.2303276";
   final apiKey = "152da546ee82e86ad057e09fa718fd85";
   final requestUrl =
-      "http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}";
+      "http://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&units=metric&appid=$apiKey";
 
   final response = await http.get(Uri.parse(requestUrl));
   return WeatherInfo.fromJson(jsonDecode(response.body));
-  // } else {
-  //   throw Exception("Error loading request URL info.");
-  // }
 }
 
 class WeatherInfo {
@@ -37,11 +35,10 @@ class WeatherInfo {
   factory WeatherInfo.fromJson(Map<String, dynamic> json) {
     return WeatherInfo(
         time: json['time'],
-        image: json['main']("icon"),
-        weather: json['weather'][0]['description'],
-        temperature: json['main']['temperature'],
-        tempMin: json['main']['temp_min'],
-        tempMax: json['main']['temp_max']);
+        weather: json['list'][0]['weather'][0]['main'],
+        temperature: json['list'][0]['main']['temp'],
+        tempMin: json['list'][0]['main']['temp_min'],
+        tempMax: json['list'][0]['main']['temp_max']);
   }
 }
 
@@ -70,28 +67,28 @@ class _TodayState extends State<Today> {
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               padding: EdgeInsets.all(10),
-              itemCount: snapshot.data.length,
+              // itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                     child: GridTile(
                   child: Card(
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage:
-                              NetworkImage(snapshot.data['main']['icon']),
+                        Image.asset(
+                          "assets/weather_status_icons/${snapshot.data.weather}.png",
+                          height: 75,
+                          width: 75,
                         ),
                         Padding(
                           padding: EdgeInsets.all(8),
                           child: Title(
                             color: Colors.black,
-                            child: Text(snapshot.data['main']['temperature']),
+                            child: Text(snapshot.data.temperature.toString()),
                           ),
                         ),
-                        Text(snapshot.data['weather'][0]['description']),
-                        Text("Min : " + snapshot.data['main']['temp_min']),
-                        Text("Max : " + snapshot.data['main']['temp_max']),
+                        Text(snapshot.data.weather.toString()),
+                        Text("Min : ${snapshot.data.tempMin.toString()}"),
+                        Text("Max : ${snapshot.data.tempMax.toString()}"),
                       ],
                     ),
                   ),
@@ -103,6 +100,9 @@ class _TodayState extends State<Today> {
               child: Text("${snapshot.error}"),
             );
           }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );
