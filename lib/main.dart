@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/view_main/current.dart';
 import 'package:praca/view_main/weekly.dart';
+import 'package:praca/view_main/7days.dart';
 import 'package:praca/view_main/today.dart';
 
 void main() {
@@ -73,7 +74,7 @@ class _HomePage extends State<HomePage> {
       //     ),
       //   ],
       // ),
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xff00539c),
@@ -92,8 +93,12 @@ class _HomePage extends State<HomePage> {
                 "TODAY",
                 style: GoogleFonts.raleway(fontSize: 12),
               ),
-              Text(
+              /*Text(
                 "WEEKLY",
+                style: GoogleFonts.raleway(fontSize: 12),
+              ),*/
+              Text(
+                "7-DAYS-FORWARD",
                 style: GoogleFonts.raleway(fontSize: 12),
               ),
             ],
@@ -103,7 +108,8 @@ class _HomePage extends State<HomePage> {
           children: [
             Current(),
             Today(),
-            Weekly(),
+            //Weekly(),
+            SevenDays(),
           ],
         ),
       ),
