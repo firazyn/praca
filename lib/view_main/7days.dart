@@ -24,7 +24,6 @@ class _SevenDays extends State<SevenDays> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
 
   Position _currentPosition;
-  String _currentAddress;
 
   String searchApiUrl =
       'https://www.metaweather.com/api/location/search/?query=';
@@ -88,9 +87,9 @@ class _SevenDays extends State<SevenDays> {
   }
 
   void onTextFieldSubmitted(String input) async {
-    await fetchSearch(input);
-    await fetchLocation();
-    await fetchLocationDay();
+    fetchSearch(input);
+    fetchLocation();
+    fetchLocationDay();
   }
 
   _getCurrentLocation() {
@@ -115,7 +114,7 @@ class _SevenDays extends State<SevenDays> {
       Placemark place = p[0];
 
       setState(() {
-        _currentAddress =
+        String _currentAddress =
             "${place.locality}, ${place.postalCode}, ${place.country}";
       });
       onTextFieldSubmitted(place.locality);

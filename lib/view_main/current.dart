@@ -75,8 +75,11 @@ class _Current extends State<Current> {
               child: Text('${snapshot.error}'),
             );
           }
-          return Center(
-            child: CircularProgressIndicator(),
+          return Container(
+            color: Color(0xff00539c),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
         },
       ),

@@ -88,7 +88,8 @@ class _TodayState extends State<Today> {
                               child: Title(
                                 color: Colors.black,
                                 child: Text(
-                                  snapshot.data.temperature.toString() + "°C",
+                                  snapshot.data.temperature.toInt().toString() +
+                                      "°C",
                                   style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
                                       fontWeight: FontWeight.w500,
@@ -108,7 +109,7 @@ class _TodayState extends State<Today> {
                                       color: Colors.white)),
                             ),
                             Text(
-                              "Min : ${snapshot.data.tempMin.toString()} °C",
+                              "Min : ${snapshot.data.tempMin.toInt().toString()} °C",
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
                                   fontWeight: FontWeight.w500,
@@ -118,7 +119,7 @@ class _TodayState extends State<Today> {
                               ),
                             ),
                             Text(
-                              "Max : ${snapshot.data.tempMax.toString()} °C",
+                              "Max : ${snapshot.data.tempMax.toInt().toString()} °C",
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
                                   fontWeight: FontWeight.w500,
@@ -144,13 +145,6 @@ class _TodayState extends State<Today> {
         },
       ),
     );
-  }
-}
-
-class MainWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
 
