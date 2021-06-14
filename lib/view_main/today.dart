@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-Future<WeatherInfo> fetchWeather() async {
+Future<List<WeatherInfo>> fetchWeather() async {
   final latitude = "-5.3745746";
   final longitude = "105.2303276";
   final apiKey = "152da546ee82e86ad057e09fa718fd85";
@@ -13,7 +13,18 @@ Future<WeatherInfo> fetchWeather() async {
       "http://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&units=metric&appid=$apiKey";
 
   final response = await http.get(Uri.parse(requestUrl));
-  return WeatherInfo.fromJson(jsonDecode(response.body));
+  var jsonInfo = json.decode(response.body);
+  List<dynamic> listInfo = (jsonInfo as Map<String, dynamic>)['list'];
+  List<WeatherInfo> weatherInfo = [];
+  for (int i = 0; i <= 20; i++) {
+    weatherInfo.add(WeatherInfo.createInfo(listInfo[i]));
+  }
+
+  if (response.statusCode == 200) {
+    return weatherInfo;
+  } else {
+    throw Exception("Error loading request URL info.");
+  }
 }
 
 class WeatherInfo {
@@ -24,22 +35,33 @@ class WeatherInfo {
   final tempMax;
   final temperature;
 
-  WeatherInfo(
-      {this.time,
-      this.image,
-      this.weather,
-      this.tempMin,
-      this.tempMax,
-      this.temperature});
+  WeatherInfo({
+    this.time,
+    this.image,
+    this.weather,
+    this.tempMin,
+    this.tempMax,
+    this.temperature,
+  });
 
-  factory WeatherInfo.fromJson(Map<String, dynamic> json) {
+  factory WeatherInfo.createInfo(Map<String, dynamic> json) {
     return WeatherInfo(
-        time: json['time'],
-        weather: json['list'][0]['weather'][0]['main'],
-        temperature: json['list'][0]['main']['temp'],
-        tempMin: json['list'][0]['main']['temp_min'],
-        tempMax: json['list'][0]['main']['temp_max']);
+      time: json['dt_txt'],
+      weather: json['weather'][0]['main'],
+      temperature: json['main']['temp'],
+      tempMin: json['main']['temp_min'],
+      tempMax: json['main']['temp_max'],
+    );
   }
+
+  // factory WeatherInfo.fromJson(Map<String, dynamic> json) {
+  //   return WeatherInfo(
+  //       time: json['time'],
+  //       weather: json['list'][0]['weather'][0]['main'],
+  //       temperature: json['list'][0]['main']['temp'],
+  //       tempMin: json['list'][0]['main']['temp_min'],
+  //       tempMax: json['list'][0]['main']['temp_max']);
+  // }
 }
 
 class Today extends StatefulWidget {
@@ -48,27 +70,27 @@ class Today extends StatefulWidget {
 }
 
 class _TodayState extends State<Today> {
-  Future<WeatherInfo> futureWeather;
+  // Future<List<WeatherInfo>> futureWeather;
 
-  @override
-  void initState() {
-    super.initState();
-    futureWeather = fetchWeather();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   futureWeather = fetchWeather();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Color(0xff00539c),
-      child: FutureBuilder<WeatherInfo>(
-        future: futureWeather,
+      child: FutureBuilder<List<WeatherInfo>>(
+        future: fetchWeather(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return GridView.builder(
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               padding: EdgeInsets.all(10),
-              // itemCount: snapshot.data.length,
+              itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                     color: Color(0xff00539c),
