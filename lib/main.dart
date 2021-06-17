@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/view_main/current.dart';
 import 'package:praca/view_main/weekly.dart';
 import 'package:praca/view_main/7days.dart';
-import 'package:praca/view_main/today.dart';
+import 'package:praca/view_main/todayver2.dart';
 
 void main() {
   runApp(MyApp());

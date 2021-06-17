@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:weather/weather.dart';
+// import 'package:weather/weather.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+
+Future<WeatherInfo> fetchWeather() async {
+  final latitude = "-5.3745746";
+  final longitude = "105.2303276";
+  final apiKey = "152da546ee82e86ad057e09fa718fd85";
+  final requestUrl =
+      "http://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&units=metric&appid=$apiKey";
+
+  final response = await http.get(Uri.parse(requestUrl));
+  return WeatherInfo.fromJson(jsonDecode(response.body));
+}
 
 class WeatherInfo {
   final time;
@@ -12,58 +23,30 @@ class WeatherInfo {
   final tempMin;
   final tempMax;
   final temperature;
+  List<int> index = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  WeatherInfo({
-    this.time,
-    this.image,
-    this.weather,
-    this.tempMin,
-    this.tempMax,
-    this.temperature,
-  });
+  WeatherInfo(
+      {this.time,
+      this.image,
+      this.weather,
+      this.tempMin,
+      this.tempMax,
+      this.temperature});
 
-  factory WeatherInfo.createInfo(Map<String, dynamic> json) {
+  factory WeatherInfo.fromJson(Map<String, dynamic> json) {
     return WeatherInfo(
-      time: json['dt_txt'],
-      weather: json['weather'][0]['main'],
-      temperature: json['main']['temp'],
-      tempMin: json['main']['temp_min'],
-      tempMax: json['main']['temp_max'],
-    );
+        time: json['dt_txt'],
+        weather: json['list'][0]['weather'][0]['main'],
+        temperature: json['list'][0]['main']['temp'],
+        tempMin: json['list'][0]['main']['temp_min'],
+        tempMax: json['list'][0]['main']['temp_max']);
+    // time: json['time'],
+    // weather: json['list'][0]['weather'][0]['main'],
+    // temperature: json['list'][0]['main']['temp'],
+    // tempMin: json['list'][0]['main']['temp_min'],
+    // tempMax: json['list'][0]['main']['temp_max']);
   }
 }
-
-Future<List<WeatherInfo>> fetchWeather() async {
-  final latitude = "-5.3745746";
-  final longitude = "105.2303276";
-  final apiKey = "152da546ee82e86ad057e09fa718fd85";
-  final requestUrl =
-      "http://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&units=metric&appid=$apiKey";
-
-  final response = await http.get(Uri.parse(requestUrl));
-  var jsonInfo = json.decode(response.body);
-  List<dynamic> listInfo = (jsonInfo as Map<String, dynamic>)['list'];
-  List<WeatherInfo> weatherInfo = [];
-  for (int index = 0; index <= 9; index++) {
-    weatherInfo.add(WeatherInfo.createInfo(listInfo[index]));
-  }
-
-  if (response.statusCode == 200) {
-    return weatherInfo;
-  } else {
-    throw Exception("Error loading request URL info.");
-  }
-}
-
-// factory WeatherInfo.fromJson(Map<String, dynamic> json) {
-//   return WeatherInfo(
-//       time: json['time'],
-//       weather: json['list'][0]['weather'][0]['main'],
-//       temperature: json['list'][0]['main']['temp'],
-//       tempMin: json['list'][0]['main']['temp_min'],
-//       tempMax: json['list'][0]['main']['temp_max']);
-// }
-// }
 
 class Today extends StatefulWidget {
   @override
@@ -71,27 +54,27 @@ class Today extends StatefulWidget {
 }
 
 class _TodayState extends State<Today> {
-  // Future<List<WeatherInfo>> futureWeather;
+  Future<WeatherInfo> futureWeather;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   futureWeather = fetchWeather();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    futureWeather = fetchWeather();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Color(0xff00539c),
-      child: FutureBuilder<List<WeatherInfo>>(
-        future: fetchWeather(),
+      child: FutureBuilder<WeatherInfo>(
+        future: futureWeather,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return GridView.builder(
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               padding: EdgeInsets.all(10),
-              itemCount: snapshot.data.length,
+              // itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                     color: Color(0xff00539c),
@@ -101,6 +84,14 @@ class _TodayState extends State<Today> {
                         color: Color(0xff00539c),
                         child: Column(
                           children: [
+                            Text(
+                              snapshot.data.time.toString(),
+                              style: GoogleFonts.raleway(
+                                  textStyle: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 18,
+                                      color: Colors.white)),
+                            ),
                             Image.asset(
                               "assets/weather_status_icons/${snapshot.data.weather}.png",
                               height: 60,
@@ -170,6 +161,167 @@ class _TodayState extends State<Today> {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:google_fonts/google_fonts.dart';
+// import 'package:weather/weather.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:async';
+// import 'dart:convert';
+// import 'today_model.dart';
+
+// class WeatherInfo {
+//   final time;
+//   final weather;
+//   final image;
+//   final tempMin;
+//   final tempMax;
+//   final temperature;
+
+//   WeatherInfo(Set set,
+//       {this.time,
+//       this.image,
+//       this.weather,
+//       this.tempMin,
+//       this.tempMax,
+//       this.temperature});
+// }
+
+// class Today extends StatefulWidget {
+//   @override
+//   _TodayState createState() => _TodayState();
+// }
+
+// class _TodayState extends State<Today> {
+//   List<List> weatherInfo = [];
+//   var loading = false;
+//   Future<Null> fetchWeather() async {
+//     final latitude = "-5.3745746";
+//     final longitude = "105.2303276";
+//     final apiKey = "152da546ee82e86ad057e09fa718fd85";
+//     final requestUrl =
+//         "http://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&units=metric&appid=$apiKey";
+
+//     setState(() {
+//       loading = true;
+//     });
+//     final response = await http.get(Uri.parse(requestUrl));
+//     if (response.statusCode == 200) {
+//       final data = json.decode(response.body);
+//       setState(() {
+//         for (Map i in data) {
+//           weatherInfo.add(List.fromJson(i));
+//         }
+//         loading = false;
+//       });
+//     }
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchWeather();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       color: Color(0xff00539c),
+//       child: FutureBuilder(
+//         future: fetchWeather(),
+//         builder: (BuildContext context, AsyncSnapshot snapshot) {
+//           if (snapshot.hasData) {
+//             return GridView.builder(
+//               gridDelegate:
+//                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+//               padding: EdgeInsets.all(10),
+//               itemCount: weatherInfo.length,
+//               itemBuilder: (BuildContext context, int index) {
+//                 final item = weatherInfo[i];
+//                 return Container(
+//                     color: Color(0xff00539c),
+//                     child: GridTile(
+//                       child: Card(
+//                         elevation: 0,
+//                         color: Color(0xff00539c),
+//                         child: Column(
+//                           children: [
+//                             Text(
+//                               item.dt_txt,
+//                               style: GoogleFonts.raleway(
+//                                   textStyle: TextStyle(
+//                                       fontWeight: FontWeight.w300,
+//                                       fontSize: 18,
+//                                       color: Colors.white)),
+//                             ),
+//                             Image.asset(
+//                               "assets/weather_status_icons/${item.weather.main}.png",
+//                               height: 60,
+//                               width: 60,
+//                             ),
+//                             Padding(
+//                               padding: EdgeInsets.all(8),
+//                               child: Title(
+//                                 color: Colors.black,
+//                                 child: Text(
+//                                   item.main.temp + "°C",
+//                                   style: GoogleFonts.montserrat(
+//                                     textStyle: TextStyle(
+//                                       fontWeight: FontWeight.w500,
+//                                       fontSize: 13,
+//                                       color: Colors.white,
+//                                     ),
+//                                   ),
+//                                 ),
+//                               ),
+//                             ),
+//                             Text(
+//                               item.weather.main,
+//                               style: GoogleFonts.raleway(
+//                                   textStyle: TextStyle(
+//                                       fontWeight: FontWeight.w300,
+//                                       fontSize: 18,
+//                                       color: Colors.white)),
+//                             ),
+//                             Text(
+//                               "Min : ${item.main.temp_min} °C",
+//                               style: GoogleFonts.montserrat(
+//                                 textStyle: TextStyle(
+//                                   fontWeight: FontWeight.w500,
+//                                   fontSize: 11.8,
+//                                   color: Colors.white,
+//                                 ),
+//                               ),
+//                             ),
+//                             Text(
+//                               "Max : ${item.main.temp_max} °C",
+//                               style: GoogleFonts.montserrat(
+//                                 textStyle: TextStyle(
+//                                   fontWeight: FontWeight.w500,
+//                                   fontSize: 11.8,
+//                                   color: Colors.white,
+//                                 ),
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ));
+//               },
+//             );
+//           } else if (snapshot.hasError) {
+//             return Center(
+//               child: Text("${snapshot.error}"),
+//             );
+//           }
+//           return Center(
+//             child: CircularProgressIndicator(),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
 
 // class Today extends StatefulWidget {
 //   @override
