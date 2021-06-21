@@ -78,8 +78,7 @@ class _HomePage extends State<HomePage> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: Container(
-              width: 100,
+            title: Center(
               child: Text(
                 "PRACA",
                 style: GoogleFonts.montserrat(
