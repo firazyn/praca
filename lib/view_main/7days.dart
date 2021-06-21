@@ -129,14 +129,15 @@ class _SevenDays extends State<SevenDays> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Container(
-          decoration: BoxDecoration(
+          color: Color(0xff00539c),
+          /*decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/$weather.png'),
               fit: BoxFit.cover,
               colorFilter: new ColorFilter.mode(
                   Colors.black.withOpacity(0.6), BlendMode.dstATop),
             ),
-          ),
+          ),*/
           child: temperature == null
               ? Center(child: CircularProgressIndicator())
               : Scaffold(
