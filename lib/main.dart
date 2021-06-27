@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/view_main/current.dart';
 import 'package:praca/view_main/menu_item.dart';
-import 'package:praca/view_main/menu_items.dart';
-import 'package:praca/view_main/weekly.dart';
+// import 'package:praca/view_main/weekly.dart';
 import 'package:praca/view_main/7days.dart';
 import 'package:praca/view_main/todayver2.dart';
 import 'package:praca/drawer.dart';
+import 'package:praca/l10n/L10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,6 +22,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      supportedLocales: L10n.all,
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       home: HomePage(),
     );
   }
@@ -110,7 +118,7 @@ class _HomePage extends State<HomePage> {
                   color: Colors.transparent),
               tabs: [
                 Text(
-                  "CURRENT",
+                  AppLocalizations.of(context).current,
                   style: GoogleFonts.raleway(fontSize: 12),
                 ),
                 Text(

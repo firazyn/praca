@@ -1,0 +1,7 @@
+{
+  "language": "Bahasa",
+  "@language":{
+    "description": "Bahasa yang digunakan saat ini",
+  "current": "Sekarang"
+  }
+}
