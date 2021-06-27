@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/view_main/current.dart';
+import 'package:praca/view_main/menu_item.dart';
+import 'package:praca/view_main/menu_items.dart';
 import 'package:praca/view_main/weekly.dart';
 import 'package:praca/view_main/7days.dart';
 import 'package:praca/view_main/todayver2.dart';
@@ -94,11 +96,12 @@ class _HomePage extends State<HomePage> {
             backgroundColor: Color(0xff00539c),
             elevation: 0,
             actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.settings),
-                tooltip: 'Setting Icon',
-                onPressed: () {},
-              ), //IconButton
+              PopupMenuButton<MenuItem>(
+                onSelected: (item) => onSelected(context, item),
+                itemBuilder: (context) => [
+                  ...MenuItems.itemFirst.map(buildItem).toList(),
+                ],
+              ),
             ],
             bottom: TabBar(
               unselectedLabelColor: Colors.white30,
@@ -138,11 +141,30 @@ class _HomePage extends State<HomePage> {
           ),
         ));
   }
-}
 
-class CustomAppBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AppBar();
+  PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem(
+        value: item,
+        child: Row(
+          children: [
+            Icon(item.icon, color: Color(0xff00539c), size: 20),
+            const SizedBox(width: 12),
+            Text(item.text),
+          ],
+        ),
+      );
+
+  void onSelected(BuildContext context, MenuItem item) {
+    switch (item) {
+      case MenuItems.itemSettings:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => SettingsPage()),
+        );
+        break;
+      case MenuItems.itemAbout:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => AboutPage()),
+        );
+        break;
+    }
   }
 }
