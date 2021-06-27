@@ -1,7 +1,18 @@
 {
   "language": "English",
   "@language":{
-    "description": "The Current Language",
-  "current": "Current"
-  }
+    "description": "The Current Language"
+  },
+  "current": "CURRENT",
+  "@current":{
+    "description": "Current weather"
+  },
+  "today": "TODAY",
+  "@today":{
+    "description": "Today's weather"
+  },
+  "week": "7-DAYS-FORWARD",
+  "@week":{
+    "description": "Weekly weather"
+  },
 }

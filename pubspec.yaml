@@ -36,6 +36,7 @@ dependencies:
   weather: ^1.4.0
   flutter_localizations:
     sdk: flutter
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:

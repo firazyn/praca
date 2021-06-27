@@ -1,7 +1,9 @@
 {
   "language": "日本語",
   "@language":{
-    "description": "げんざい の げんご",
-  "current": "げんざい"
-  }
+    "description": "げんざい の げんご"
+  },
+  "current": "げんざい",
+  "today": "きょう",
+  "week": "次の7日"
 }

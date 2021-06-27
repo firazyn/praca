@@ -1,7 +1,9 @@
 {
   "language": "Bahasa",
   "@language":{
-    "description": "Bahasa yang digunakan saat ini",
-  "current": "Sekarang"
-  }
+    "description": "Bahasa yang digunakan saat ini"
+  },
+  "current": "SEKARANG",
+  "today": "HARI INI",
+  "week": "7 HARI"
 }

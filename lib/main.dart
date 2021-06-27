@@ -1,9 +1,12 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:praca/l10n/locale_provider.dart';
 import 'package:praca/view_main/current.dart';
 import 'package:praca/view_main/menu_item.dart';
-// import 'package:praca/view_main/weekly.dart';
+import 'package:provider/provider.dart';
 import 'package:praca/view_main/7days.dart';
 import 'package:praca/view_main/todayver2.dart';
 import 'package:praca/drawer.dart';
@@ -16,21 +19,26 @@ void main() {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Praca',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      supportedLocales: L10n.all,
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      home: HomePage(),
-    );
-  }
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+      create: (context) => LocaleProvider(),
+      builder: (context, child) {
+        final provider = Provider.of<LocaleProvider>(context);
+
+        return MaterialApp(
+          title: 'Praca',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          locale: provider.locale,
+          supportedLocales: L10n.all,
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          home: HomePage(),
+        );
+      });
 }
 
 class HomePage extends StatefulWidget {
@@ -43,6 +51,7 @@ class HomePage extends StatefulWidget {
 class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    var current;
     return DefaultTabController(
         // child: Stack(
         //   children: [
@@ -122,7 +131,7 @@ class _HomePage extends State<HomePage> {
                   style: GoogleFonts.raleway(fontSize: 12),
                 ),
                 Text(
-                  "TODAY",
+                  AppLocalizations.of(context).today,
                   style: GoogleFonts.raleway(fontSize: 12),
                 ),
                 /*Text(
@@ -130,7 +139,7 @@ class _HomePage extends State<HomePage> {
                 style: GoogleFonts.raleway(fontSize: 12),
               ),*/
                 Text(
-                  "7-DAYS-FORWARD",
+                  AppLocalizations.of(context).week,
                   style: GoogleFonts.raleway(fontSize: 12),
                 ),
               ],
