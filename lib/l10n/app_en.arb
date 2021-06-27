@@ -14,5 +14,5 @@
   "week": "7-DAYS-FORWARD",
   "@week":{
     "description": "Weekly weather"
-  },
+  }
 }
