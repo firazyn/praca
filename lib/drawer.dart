@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DrawerWidget extends StatelessWidget {
   @override
@@ -11,11 +12,11 @@ class DrawerWidget extends StatelessWidget {
           _drawerHeader(),
           _drawerItem(
               icon: Icons.settings,
-              text: 'Settings',
+              text: AppLocalizations.of(context).settings,
               onTap: () => print('Tap Settings')),
           _drawerItem(
               icon: Icons.file_copy,
-              text: 'About',
+              text: AppLocalizations.of(context).about,
               onTap: () => print('Tap About')),
           Divider(height: 25, thickness: 1),
           Padding(
@@ -28,11 +29,11 @@ class DrawerWidget extends StatelessWidget {
           ),
           _drawerItem(
               icon: Icons.settings,
-              text: 'Settings',
+              text: AppLocalizations.of(context).settings,
               onTap: () => print('Tap Settings')),
           _drawerItem(
               icon: Icons.file_copy,
-              text: 'About',
+              text: AppLocalizations.of(context).about,
               onTap: () => print('Tap About')),
         ],
       ),

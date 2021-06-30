@@ -15,5 +15,7 @@
   "sunny": "Cerah",
   "rain": "Hujan",
   "clouds": "Berawan",
-  "snow": "Salju"
+  "snow": "Salju",
+  "settings": "Pengaturan",
+  "about": "Tentang Kami"
 }

@@ -139,16 +139,16 @@ class WeatherStatus extends StatefulWidget {
 class _WeatherStatusState extends State<WeatherStatus> {
   @override
   Widget build(BuildContext context) {
-    String weatherStatus = widget.status;
-    if (weatherStatus == 'Rain') {
+    String weatherStatus;
+    if (widget.status == 'Rain') {
       setState(() {
         weatherStatus = AppLocalizations.of(context).rain;
       });
-    } else if (weatherStatus == 'Sunny') {
+    } else if (widget.status == 'Sunny') {
       setState(() {
         weatherStatus = AppLocalizations.of(context).sunny;
       });
-    } else if (weatherStatus == 'Clouds') {
+    } else if (widget.status == 'Clouds') {
       setState(() {
         weatherStatus = AppLocalizations.of(context).clouds;
       });

@@ -15,5 +15,7 @@
   "sunny": "晴れ",
   "rain": "雨",
   "clouds": "曇り",
-  "snow": "降雪"
+  "snow": "降雪",
+  "settings": "設定",
+  "about": "約"
 }

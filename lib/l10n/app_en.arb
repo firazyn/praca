@@ -24,5 +24,7 @@
   "sunny": "Sunny",
   "rain": "Rain",
   "clouds": "Clouds",
-  "snow": "Snow"
+  "snow": "Snow",
+  "settings": "Settings",
+  "about": "About"
 }

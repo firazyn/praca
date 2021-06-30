@@ -85,16 +85,18 @@ class LanguageButton extends StatefulWidget {
 }
 
 class _LanguageButtonState extends State<LanguageButton> {
-  double _elevation = 1;
+  int newIndex;
+  double _elevation = 0;
   Color _textColor = Color(0xff00539c);
   Color _bgColor = Colors.white;
-  bool _isSelected = false;
+  List<bool> _isSelected = [false, false, false];
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LocaleProvider>(context, listen: false);
 
     return FloatingActionButton(
+      // splashColor: Color(0xff00539c),
       child: Text(
         widget.languageName,
         style: GoogleFonts.montserrat(
@@ -110,21 +112,103 @@ class _LanguageButtonState extends State<LanguageButton> {
       onPressed: () {
         provider.setLocale(widget.locale);
         setState(() {
-          _isSelected = !_isSelected;
-          _textColor = Colors.white;
-          _bgColor = Color(0xff00539c);
-          _elevation = 0;
+          for (int index = 0; index < _isSelected.length; index++) {
+            if (index == newIndex) {
+              _isSelected[index] = true;
+              FloatingActionButton.extended(
+                  onPressed: () {
+                    setState(() {
+                      _textColor = Colors.white;
+                      _bgColor = Color(0xff00539c);
+                      _elevation = 0;
+                    });
+                  },
+                  label: Text(widget.languageName));
+            } else {
+              _isSelected[index] = false;
+            }
+          }
         });
       },
     );
   }
 }
 
+// class _LanguageButtonState extends State<LanguageButton> {
+//   final provider = Provider.of<LocaleProvider>(context, listen: false);
+//   double _elevation = 1;
+//   Color _textColor = Color(0xff00539c);
+//   Color _bgColor = Colors.white;
+//   List<bool> _isSelected = [true, false, false];
+
+//   @override
+//   Widget build(BuildContext context) => Container(
+//       color: Colors.transparent,
+//       child: ToggleButtons(
+//           isSelected: _isSelected,
+//           fillColor: _bgColor,
+//           selectedColor: _textColor,
+//           color: Colors.white,
+//           renderBorder: false,
+//           highlightColor: Colors.grey,
+//           children: <Widget>[
+//             Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 12),
+//               child: Text(
+//                 widget.languageName,
+//                 style: GoogleFonts.montserrat(
+//                   textStyle: TextStyle(
+//                     fontWeight: FontWeight.w500,
+//                     fontSize: 20,
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 12),
+//               child: Text(
+//                 widget.languageName,
+//                 style: GoogleFonts.montserrat(
+//                   textStyle: TextStyle(
+//                     fontWeight: FontWeight.w500,
+//                     fontSize: 20,
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 12),
+//               child: Text(
+//                 widget.languageName,
+//                 style: GoogleFonts.montserrat(
+//                   textStyle: TextStyle(
+//                     fontWeight: FontWeight.w500,
+//                     fontSize: 20,
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ],
+//           onPressed: (int newIndex) {
+//             int newIndex;
+//             setState(() {
+//               provider.setLocale(widget.locale);
+//               for (int index = 0; index < _isSelected.length; index++) {
+//                 if (index == newIndex) {
+//                   _isSelected[index] = true;
+//                 } else {
+//                   _isSelected[index] = false;
+//                 }
+//               }
+//             });
+//           }));
+// }
+
 class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('About'),
+          title: Text(AppLocalizations.of(context).about),
           centerTitle: true,
           backgroundColor: Color(0xff00539c),
         ),
