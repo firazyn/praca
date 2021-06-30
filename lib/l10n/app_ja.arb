@@ -3,7 +3,17 @@
   "@language":{
     "description": "げんざい の げんご"
   },
+  "select_language": "言語を選択する",
+  "settings": "設定",
   "current": "げんざい",
   "today": "きょう",
-  "week": "次の7日"
+  "week": "次の7日",
+  "feels_like": "温度感",
+  "humidity": "水分",
+  "pressure": "気圧",
+  "wind_speed": "風速",
+  "sunny": "晴れ",
+  "rain": "雨",
+  "clouds": "曇り",
+  "snow": "降雪"
 }

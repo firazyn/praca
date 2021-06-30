@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/view_main/current_tile.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CurrentBody extends StatelessWidget {
   final location;
@@ -90,17 +91,8 @@ class CurrentBody extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 30.0),
-                        child: Text(
-                          //Weather Status
-                          "${weather.toString()}",
-                          style: GoogleFonts.raleway(
-                            textStyle: TextStyle(
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        //Weather Status
+                        child: WeatherStatus(status: weather.toString()),
                       ),
                     ],
                   ),
@@ -117,19 +109,62 @@ class CurrentBody extends StatelessWidget {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  Tile("Thermo.png", "Feels Like",
+                  Tile("Thermo.png", AppLocalizations.of(context).feels_like,
                       "${tempFeels.toInt().toString()}°C"),
-                  Tile("Humid.png", "Humidity", "${humidity.toString()}%"),
-                  Tile(
-                      "Pressure.png", "Pressure", "${pressure.toString()} hPa"),
-                  Tile(
-                      "Wind.png", "Wind Speed", "${windSpeed.toString()} km/h"),
+                  Tile("Humid.png", AppLocalizations.of(context).humidity,
+                      "${humidity.toString()}%"),
+                  Tile("Pressure.png", AppLocalizations.of(context).pressure,
+                      "${pressure.toString()} hPa"),
+                  Tile("Wind.png", AppLocalizations.of(context).wind_speed,
+                      "${windSpeed.toString()} km/h"),
                 ],
               ),
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class WeatherStatus extends StatefulWidget {
+  final status;
+
+  WeatherStatus({this.status});
+
+  @override
+  _WeatherStatusState createState() => _WeatherStatusState();
+}
+
+class _WeatherStatusState extends State<WeatherStatus> {
+  @override
+  Widget build(BuildContext context) {
+    String weatherStatus = widget.status;
+    if (weatherStatus == 'Rain') {
+      setState(() {
+        weatherStatus = AppLocalizations.of(context).rain;
+      });
+    } else if (weatherStatus == 'Sunny') {
+      setState(() {
+        weatherStatus = AppLocalizations.of(context).sunny;
+      });
+    } else if (weatherStatus == 'Clouds') {
+      setState(() {
+        weatherStatus = AppLocalizations.of(context).clouds;
+      });
+    } else {
+      weatherStatus = widget.status;
+    }
+
+    return Text(
+      weatherStatus,
+      style: GoogleFonts.raleway(
+        textStyle: TextStyle(
+          fontSize: 25.0,
+          fontWeight: FontWeight.w400,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

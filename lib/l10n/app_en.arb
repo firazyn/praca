@@ -3,6 +3,8 @@
   "@language":{
     "description": "The Current Language"
   },
+  "select_language": "Select the Language",
+  "settings": "Settings",
   "current": "CURRENT",
   "@current":{
     "description": "Current weather"
@@ -14,5 +16,13 @@
   "week": "7-DAYS-FORWARD",
   "@week":{
     "description": "Weekly weather"
-  }
+  },
+  "feels_like": "Feels Like",
+  "humidity": "Humidity",
+  "pressure": "Pressure",
+  "wind_speed": "Wind Speed",
+  "sunny": "Sunny",
+  "rain": "Rain",
+  "clouds": "Clouds",
+  "snow": "Snow"
 }
