@@ -17,5 +17,12 @@
   "clouds": "Berawan",
   "snow": "Salju",
   "settings": "Pengaturan",
-  "about": "Tentang Kami"
+  "about": "Tentang Kami",
+  "share": "Bagikan",
+  "help": "Bantuan",
+  "general": "Umum",
+  "information": "Informasi",
+  "help_text": "Dalam Proses Pengembangan",
+  "info_text": "Tentang Pengembang",
+  "welcome": "Selamat Datang"
 }

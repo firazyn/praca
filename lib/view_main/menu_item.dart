@@ -17,17 +17,23 @@ class MenuItem {
 class MenuItems {
   static const List<MenuItem> itemFirst = [
     itemHelp,
-    itemSettings,
+    // itemSettings,
+    itemRate,
   ];
 
-  static const itemSettings = MenuItem(
-    text: 'Settings',
-    icon: Icons.settings,
-  );
+  // static const itemSettings = MenuItem(
+  //   text: 'Settings',
+  //   icon: Icons.settings,
+  // );
 
   static const itemHelp = MenuItem(
     text: 'Help',
     icon: Icons.help,
+  );
+
+  static const itemRate = MenuItem(
+    text: 'Tutorials',
+    icon: Icons.star,
   );
 }
 
@@ -207,8 +213,26 @@ class _LanguageButtonState extends State<LanguageButton> {
 class HelpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context).help),
+          centerTitle: true,
+          backgroundColor: Color(0xff00539c),
+          elevation: 0,
+        ),
+        body: Container(
+          color: Color(0xff00539c),
+          child: Center(
+            child: Text(
+              AppLocalizations.of(context).help_text,
+              style: GoogleFonts.raleway(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ));
+    //throw UnimplementedError();
   }
 }
 
@@ -238,7 +262,7 @@ class AboutPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
-                    child: Text("About Developers",
+                    child: Text(AppLocalizations.of(context).info_text,
                         style: GoogleFonts.raleway(
                             fontSize: 22, fontWeight: FontWeight.bold)),
                   ),
@@ -265,7 +289,7 @@ class AboutPage extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(15),
                             child: Text(
-                                "Firaztori Yuzuf Nurwanto adalah mahasiswa jurusan Ilmu Komputer angkatan 2018",
+                                "Firaztori Yusuf Nurwanto adalah mahasiswa jurusan Ilmu Komputer angkatan 2018",
                                 style: GoogleFonts.montserrat(fontSize: 12
                                     // fontWeight: FontWeight.bold,
                                     ),

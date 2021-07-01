@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/l10n/locale_provider.dart';
 import 'package:praca/view_main/current.dart';
 import 'package:praca/view_main/menu_item.dart';
+import 'package:praca/view_main/rating_page.dart';
 import 'package:provider/provider.dart';
 import 'package:praca/view_main/7days.dart';
 import 'package:praca/view_main/todayver2.dart';
@@ -169,15 +170,18 @@ class _HomePage extends State<HomePage> {
 
   void onSelected(BuildContext context, MenuItem item) {
     switch (item) {
-      case MenuItems.itemSettings:
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => SettingsPage()),
-        );
-        break;
+      // case MenuItems.itemSettings:
+      //   Navigator.of(context).push(
+      //     MaterialPageRoute(builder: (context) => SettingsPage()),
+      //   );
+      //   break;
       case MenuItems.itemHelp:
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => HelpPage()),
         );
+        break;
+      case MenuItems.itemRate:
+        Utils.openLink(url: 'https://youtube.com');
         break;
     }
   }

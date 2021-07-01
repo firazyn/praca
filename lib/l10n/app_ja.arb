@@ -17,5 +17,12 @@
   "clouds": "曇り",
   "snow": "降雪",
   "settings": "設定",
-  "about": "約"
+  "about": "約",
+  "share": "シェア",
+  "help": "らいえん",
+  "general": "一般",
+  "information": "情報",
+  "help_text": "開発中で",
+  "info_text": "開発者について",
+  "welcome": "いらっしゃい"
 }
