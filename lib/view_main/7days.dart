@@ -11,7 +11,7 @@ class SevenDays extends StatefulWidget {
 }
 
 class _SevenDays extends State<SevenDays> {
-  int temperature;
+  int temperature = null;
   var minTemperatureForecast = new List(7);
   var maxTemperatureForecast = new List(7);
   String location = 'Jakarta';
@@ -126,6 +126,14 @@ class _SevenDays extends State<SevenDays> {
 
   @override
   Widget build(BuildContext context) {
+    if (temperature == null) {
+      return Container(
+        color: Color(0xff00539c),
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Container(
@@ -143,20 +151,50 @@ class _SevenDays extends State<SevenDays> {
               : Scaffold(
                   appBar: AppBar(
                     actions: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            width: 275,
+                            child: TextField(
+                              onSubmitted: (String input) {
+                                onTextFieldSubmitted(input);
+                              },
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                              decoration: InputDecoration(
+                                hintText: 'Search another location...',
+                                hintStyle: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                                prefixIcon:
+                                    Icon(Icons.search, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 25.0, right: 25.0),
+                            child: Text(errorMessage,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.redAccent,
+                                    fontSize:
+                                        Platform.isAndroid ? 15.0 : 20.0)),
+                          )
+                        ],
+                      ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 20.0),
+                        padding: const EdgeInsets.only(right: 25.0),
                         child: GestureDetector(
                           onTap: () {
                             _getCurrentLocation();
                           },
-                          child: Icon(Icons.location_city, size: 36.0),
+                          child: Icon(Icons.location_city, size: 30.0),
                         ),
                       )
                     ],
                     backgroundColor: Colors.transparent,
                     elevation: 0.0,
                   ),
-                  resizeToAvoidBottomInset: true,
                   backgroundColor: Colors.transparent,
                   body: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -176,7 +214,7 @@ class _SevenDays extends State<SevenDays> {
                             child: Text(
                               temperature.toString() + ' °C',
                               style: TextStyle(
-                                  color: Colors.white, fontSize: 60.0),
+                                  color: Colors.white, fontSize: 50.0),
                             ),
                           ),
                           Center(
@@ -202,37 +240,6 @@ class _SevenDays extends State<SevenDays> {
                                         maxTemperatureForecast[i]),
                                 ],
                               ),
-                      ),
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            width: 300,
-                            child: TextField(
-                              onSubmitted: (String input) {
-                                onTextFieldSubmitted(input);
-                              },
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 25),
-                              decoration: InputDecoration(
-                                hintText: 'Search another location...',
-                                hintStyle: TextStyle(
-                                    color: Colors.white, fontSize: 18.0),
-                                prefixIcon:
-                                    Icon(Icons.search, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 32.0, left: 32.0),
-                            child: Text(errorMessage,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.redAccent,
-                                    fontSize:
-                                        Platform.isAndroid ? 15.0 : 20.0)),
-                          )
-                        ],
                       ),
                     ],
                   ),
