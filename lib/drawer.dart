@@ -12,9 +12,25 @@ class DrawerWidget extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           _drawerHeader(),
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, top: 10, bottom: 10),
+            child: Text(AppLocalizations.of(context).general,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black54,
+                )),
+          ),
+          _drawerItem(
+            icon: Icons.settings,
+            text: AppLocalizations.of(context).settings,
+            onTap: () => {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => SettingsPage())),
+            },
+          ),
           _drawerItem(
             icon: Icons.share,
-            text: 'Share',
+            text: AppLocalizations.of(context).share,
             onTap: () => {
               Share.share(
                   'check out this new weather app! https://github.com/firazyn/praca',
@@ -22,8 +38,16 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           Divider(height: 25, thickness: 1),
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, top: 10, bottom: 10),
+            child: Text(AppLocalizations.of(context).information,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black54,
+                )),
+          ),
           _drawerItem(
-            icon: Icons.file_copy,
+            icon: Icons.info,
             text: AppLocalizations.of(context).about,
             onTap: () => {
               Navigator.of(context)

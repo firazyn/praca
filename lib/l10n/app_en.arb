@@ -26,5 +26,12 @@
   "clouds": "Clouds",
   "snow": "Snow",
   "settings": "Settings",
-  "about": "About"
+  "about": "About",
+  "share": "Share",
+  "help": "Help",
+  "general": "General",
+  "information": "Information",
+  "help_text": "Please Wait for Development",
+  "info_text": "About Developers",
+  "welcome": "Welcome, User"
 }
