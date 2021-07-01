@@ -16,8 +16,8 @@ class MenuItem {
 
 class MenuItems {
   static const List<MenuItem> itemFirst = [
+    itemHelp,
     itemSettings,
-    itemAbout,
   ];
 
   static const itemSettings = MenuItem(
@@ -25,17 +25,15 @@ class MenuItems {
     icon: Icons.settings,
   );
 
-  static const itemAbout = MenuItem(
-    text: 'About',
-    icon: Icons.info,
+  static const itemHelp = MenuItem(
+    text: 'Help',
+    icon: Icons.help,
   );
 }
 
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<LocaleProvider>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).settings),
@@ -111,24 +109,26 @@ class _LanguageButtonState extends State<LanguageButton> {
       elevation: _elevation,
       onPressed: () {
         provider.setLocale(widget.locale);
-        setState(() {
-          for (int index = 0; index < _isSelected.length; index++) {
-            if (index == newIndex) {
-              _isSelected[index] = true;
-              FloatingActionButton.extended(
-                  onPressed: () {
-                    setState(() {
-                      _textColor = Colors.white;
-                      _bgColor = Color(0xff00539c);
-                      _elevation = 0;
-                    });
-                  },
-                  label: Text(widget.languageName));
-            } else {
-              _isSelected[index] = false;
+        setState(
+          () {
+            for (int index = 0; index < _isSelected.length; index++) {
+              if (index == newIndex) {
+                _isSelected[index] = true;
+                FloatingActionButton.extended(
+                    onPressed: () {
+                      setState(() {
+                        _textColor = Colors.white;
+                        _bgColor = Color(0xff00539c);
+                        _elevation = 0;
+                      });
+                    },
+                    label: Text(widget.languageName));
+              } else {
+                _isSelected[index] = false;
+              }
             }
-          }
-        });
+          },
+        );
       },
     );
   }
@@ -203,6 +203,14 @@ class _LanguageButtonState extends State<LanguageButton> {
 //             });
 //           }));
 // }
+
+class HelpPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
 
 class AboutPage extends StatelessWidget {
   @override

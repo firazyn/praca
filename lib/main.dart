@@ -174,9 +174,9 @@ class _HomePage extends State<HomePage> {
           MaterialPageRoute(builder: (context) => SettingsPage()),
         );
         break;
-      case MenuItems.itemAbout:
+      case MenuItems.itemHelp:
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => AboutPage()),
+          MaterialPageRoute(builder: (context) => HelpPage()),
         );
         break;
     }
