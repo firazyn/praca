@@ -88,9 +88,69 @@ class LanguageButton extends StatefulWidget {
   _LanguageButtonState createState() => _LanguageButtonState();
 }
 
+// class _LanguageButtonState extends State<LanguageButton> {
+//   int newIndex;
+//   double _elevation = 0;
+//   Color _textColor = Color(0xff00539c);
+//   Color _bgColor = Colors.white;
+//   List<bool> _isSelected = [false, false, false];
+
+//   void changeColor() {
+//     setState(() {
+//       _textColor = Colors.white;
+//       _bgColor = Color(0xff00539c);
+//       _elevation = 0;
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final provider = Provider.of<LocaleProvider>(context, listen: false);
+
+//     return FloatingActionButton(
+//       // splashColor: Color(0xff00539c),
+//       child: Text(
+//         widget.languageName,
+//         style: GoogleFonts.montserrat(
+//           textStyle: TextStyle(
+//             fontWeight: FontWeight.w500,
+//             fontSize: 20,
+//             color: _textColor,
+//           ),
+//         ),
+//       ),
+//       backgroundColor: _bgColor,
+//       elevation: _elevation,
+//       onPressed: () {
+//         provider.setLocale(widget.locale);
+//         setState(
+//           () {
+//             for (int index = 0; index < _isSelected.length; index++) {
+//               if (index == newIndex) {
+//                 _isSelected[index] = true;
+//                 FloatingActionButton.extended(
+//                     onPressed: changeColor,
+//                     //() {
+//                     //   setState(() {
+//                     //     _textColor = Colors.white;
+//                     //     _bgColor = Color(0xff00539c);
+//                     //     _elevation = 0;
+//                     //   });
+//                     // },
+//                     label: Text(widget.languageName));
+//               } else {
+//                 _isSelected[index] = false;
+//               }
+//             }
+//           },
+//         );
+//       },
+//     );
+//   }
+// }
+
 class _LanguageButtonState extends State<LanguageButton> {
-  int newIndex;
-  double _elevation = 0;
+  double _elevation = 1;
   Color _textColor = Color(0xff00539c);
   Color _bgColor = Colors.white;
   List<bool> _isSelected = [false, false, false];
@@ -98,57 +158,70 @@ class _LanguageButtonState extends State<LanguageButton> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LocaleProvider>(context, listen: false);
-
-    return FloatingActionButton(
-      // splashColor: Color(0xff00539c),
-      child: Text(
-        widget.languageName,
-        style: GoogleFonts.montserrat(
-          textStyle: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 20,
-            color: _textColor,
+    return ToggleButtons(
+      renderBorder: false,
+      isSelected: _isSelected,
+      selectedColor: Colors.white,
+      color: Colors.black,
+      fillColor: Colors.lightBlue.shade900,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Text(
+            widget.languageName,
+            style: GoogleFonts.montserrat(
+              textStyle: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+              ),
+            ),
           ),
         ),
-      ),
-      backgroundColor: _bgColor,
-      elevation: _elevation,
-      onPressed: () {
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Text(
+            widget.languageName,
+            style: GoogleFonts.montserrat(
+              textStyle: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Text(
+            widget.languageName,
+            style: GoogleFonts.montserrat(
+              textStyle: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ),
+      ],
+      onPressed: (int newIndex) {
         provider.setLocale(widget.locale);
-        setState(
-          () {
-            for (int index = 0; index < _isSelected.length; index++) {
-              if (index == newIndex) {
-                _isSelected[index] = true;
-                FloatingActionButton.extended(
-                    onPressed: () {
-                      setState(() {
-                        _textColor = Colors.white;
-                        _bgColor = Color(0xff00539c);
-                        _elevation = 0;
-                      });
-                    },
-                    label: Text(widget.languageName));
-              } else {
-                _isSelected[index] = false;
-              }
+        for (int index = 0; index < _isSelected.length; index++) {
+          setState(() {
+            if (index == newIndex) {
+              _isSelected[index] = !_isSelected[index];
+            } else {
+              _isSelected[index] = false;
             }
-          },
-        );
+          });
+        }
       },
     );
   }
 }
 
-// class _LanguageButtonState extends State<LanguageButton> {
+// @override
+// Widget build(BuildContext context) {
 //   final provider = Provider.of<LocaleProvider>(context, listen: false);
-//   double _elevation = 1;
-//   Color _textColor = Color(0xff00539c);
-//   Color _bgColor = Colors.white;
-//   List<bool> _isSelected = [true, false, false];
-
-//   @override
-//   Widget build(BuildContext context) => Container(
+//   return Container(
 //       color: Colors.transparent,
 //       child: ToggleButtons(
 //           isSelected: _isSelected,
@@ -197,8 +270,8 @@ class _LanguageButtonState extends State<LanguageButton> {
 //           ],
 //           onPressed: (int newIndex) {
 //             int newIndex;
+//             provider.setLocale(widget.locale);
 //             setState(() {
-//               provider.setLocale(widget.locale);
 //               for (int index = 0; index < _isSelected.length; index++) {
 //                 if (index == newIndex) {
 //                   _isSelected[index] = true;
@@ -208,6 +281,7 @@ class _LanguageButtonState extends State<LanguageButton> {
 //               }
 //             });
 //           }));
+//   }
 // }
 
 class HelpPage extends StatelessWidget {
