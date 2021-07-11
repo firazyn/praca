@@ -49,6 +49,8 @@ class SettingsPage extends StatelessWidget {
       ),
       body: Container(
         decoration: BoxDecoration(color: Color(0xff00539c)),
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -65,14 +67,7 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                LanguageButton(languageName: 'EN', locale: Locale('en')),
-                LanguageButton(languageName: 'ID', locale: Locale('id')),
-                LanguageButton(languageName: 'JP', locale: Locale('ja')),
-              ],
-            )
+            LanguageButton(),
           ],
         ),
       ),
@@ -81,10 +76,10 @@ class SettingsPage extends StatelessWidget {
 }
 
 class LanguageButton extends StatefulWidget {
-  final languageName;
-  final Locale locale;
+  // final languageName;
+  // final Locale locale;
 
-  LanguageButton({@required this.languageName, @required this.locale});
+  // LanguageButton({@required this.languageName, @required this.locale});
   _LanguageButtonState createState() => _LanguageButtonState();
 }
 
@@ -150,25 +145,29 @@ class LanguageButton extends StatefulWidget {
 // }
 
 class _LanguageButtonState extends State<LanguageButton> {
-  double _elevation = 1;
-  Color _textColor = Color(0xff00539c);
-  Color _bgColor = Colors.white;
-  List<bool> _isSelected = [false, false, false];
+  // double _elevation = 1;
+  // Color _textColor = Color(0xff00539c);
+  // Color _bgColor = Colors.white;
+  Color _fillColor = Colors.white;
+  List<bool> _isSelected = [true, false, false];
+  List<Locale> _selectedLocale = [Locale('en'), Locale('id'), Locale('ja')];
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LocaleProvider>(context, listen: false);
     return ToggleButtons(
-      renderBorder: false,
+      renderBorder: true,
+      borderColor: Colors.white,
+      borderWidth: 0.1,
       isSelected: _isSelected,
-      selectedColor: Colors.white,
-      color: Colors.black,
-      fillColor: Colors.lightBlue.shade900,
+      selectedColor: Color(0xff00539c),
+      color: Colors.white,
+      fillColor: _fillColor,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Text(
-            widget.languageName,
+            "EN",
             style: GoogleFonts.montserrat(
               textStyle: TextStyle(
                 fontWeight: FontWeight.w500,
@@ -178,9 +177,9 @@ class _LanguageButtonState extends State<LanguageButton> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Text(
-            widget.languageName,
+            "ID",
             style: GoogleFonts.montserrat(
               textStyle: TextStyle(
                 fontWeight: FontWeight.w500,
@@ -190,9 +189,9 @@ class _LanguageButtonState extends State<LanguageButton> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Text(
-            widget.languageName,
+            "JP",
             style: GoogleFonts.montserrat(
               textStyle: TextStyle(
                 fontWeight: FontWeight.w500,
@@ -203,16 +202,16 @@ class _LanguageButtonState extends State<LanguageButton> {
         ),
       ],
       onPressed: (int newIndex) {
-        provider.setLocale(widget.locale);
-        for (int index = 0; index < _isSelected.length; index++) {
-          setState(() {
+        setState(() {
+          for (int index = 0; index < _isSelected.length; index++) {
             if (index == newIndex) {
               _isSelected[index] = !_isSelected[index];
+              provider.setLocale(_selectedLocale[index]);
             } else {
               _isSelected[index] = false;
             }
-          });
-        }
+          }
+        });
       },
     );
   }
