@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/l10n/locale_provider.dart';
 import 'package:praca/view_main/current.dart';
 import 'package:praca/view_main/menu_item.dart';
-import 'package:praca/view_main/rating_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:praca/view_main/7days.dart';
 import 'package:praca/view_main/today.dart';
@@ -178,6 +178,18 @@ class _HomePage extends State<HomePage> {
       case MenuItems.itemRate:
         Utils.openLink(url: 'https://youtube.com');
         break;
+    }
+  }
+}
+
+class Utils {
+  static Future openLink({
+    @required String url,
+  }) =>
+      _launchUrl(url);
+  static Future _launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
     }
   }
 }

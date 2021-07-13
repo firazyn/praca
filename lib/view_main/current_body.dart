@@ -68,22 +68,7 @@ class CurrentBody extends StatelessWidget {
                     ],
                   ),
                 ),
-                Flexible(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 35.0),
-                        child: Image.asset(
-                          "assets/weather_status_icons/$weather.png",
-                          height: 75,
-                          width: 75,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                WeatherImage(image: weather.toString()),
                 Flexible(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -123,6 +108,66 @@ class CurrentBody extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class WeatherImage extends StatefulWidget {
+  final image;
+
+  WeatherImage({this.image});
+
+  @override
+  _WeatherImageState createState() => _WeatherImageState();
+}
+
+class _WeatherImageState extends State<WeatherImage> {
+  @override
+  Widget build(BuildContext context) {
+    String weatherImage;
+    if (widget.image == 'Rain') {
+      setState(() {
+        weatherImage = "Rain";
+      });
+    } else if (widget.image == 'Sunny') {
+      setState(() {
+        weatherImage = "Sunny";
+      });
+    } else if (widget.image == 'Clouds') {
+      setState(() {
+        weatherImage = "Clouds";
+      });
+    } else if (widget.image == 'Snow') {
+      setState(() {
+        weatherImage = "Snow";
+      });
+    } else if (widget.image == 'Thunderstorm') {
+      setState(() {
+        weatherImage = "Thunderstorm";
+      });
+    } else if (widget.image == 'Drizzle') {
+      setState(() {
+        weatherImage = "Drizzle";
+      });
+    } else {
+      weatherImage = "Unknown";
+    }
+
+    return Flexible(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 35.0),
+            child: Image.asset(
+              "assets/weather_status_icons/$weatherImage.png",
+              height: 75,
+              width: 75,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
