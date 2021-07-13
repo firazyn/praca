@@ -17,14 +17,8 @@ class MenuItem {
 class MenuItems {
   static const List<MenuItem> itemFirst = [
     itemHelp,
-    // itemSettings,
     itemRate,
   ];
-
-  // static const itemSettings = MenuItem(
-  //   text: 'Settings',
-  //   icon: Icons.settings,
-  // );
 
   static const itemHelp = MenuItem(
     text: 'Help',
@@ -76,80 +70,12 @@ class SettingsPage extends StatelessWidget {
 }
 
 class LanguageButton extends StatefulWidget {
-  // final languageName;
-  // final Locale locale;
-
-  // LanguageButton({@required this.languageName, @required this.locale});
   _LanguageButtonState createState() => _LanguageButtonState();
 }
 
-// class _LanguageButtonState extends State<LanguageButton> {
-//   int newIndex;
-//   double _elevation = 0;
-//   Color _textColor = Color(0xff00539c);
-//   Color _bgColor = Colors.white;
-//   List<bool> _isSelected = [false, false, false];
-
-//   void changeColor() {
-//     setState(() {
-//       _textColor = Colors.white;
-//       _bgColor = Color(0xff00539c);
-//       _elevation = 0;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final provider = Provider.of<LocaleProvider>(context, listen: false);
-
-//     return FloatingActionButton(
-//       // splashColor: Color(0xff00539c),
-//       child: Text(
-//         widget.languageName,
-//         style: GoogleFonts.montserrat(
-//           textStyle: TextStyle(
-//             fontWeight: FontWeight.w500,
-//             fontSize: 20,
-//             color: _textColor,
-//           ),
-//         ),
-//       ),
-//       backgroundColor: _bgColor,
-//       elevation: _elevation,
-//       onPressed: () {
-//         provider.setLocale(widget.locale);
-//         setState(
-//           () {
-//             for (int index = 0; index < _isSelected.length; index++) {
-//               if (index == newIndex) {
-//                 _isSelected[index] = true;
-//                 FloatingActionButton.extended(
-//                     onPressed: changeColor,
-//                     //() {
-//                     //   setState(() {
-//                     //     _textColor = Colors.white;
-//                     //     _bgColor = Color(0xff00539c);
-//                     //     _elevation = 0;
-//                     //   });
-//                     // },
-//                     label: Text(widget.languageName));
-//               } else {
-//                 _isSelected[index] = false;
-//               }
-//             }
-//           },
-//         );
-//       },
-//     );
-//   }
-// }
-
 class _LanguageButtonState extends State<LanguageButton> {
-  // double _elevation = 1;
-  // Color _textColor = Color(0xff00539c);
-  // Color _bgColor = Colors.white;
   Color _fillColor = Colors.white;
-  List<bool> _isSelected = [true, false, false];
+  List<bool> _isSelected = [false, false, false];
   List<Locale> _selectedLocale = [Locale('en'), Locale('id'), Locale('ja')];
 
   @override
@@ -216,72 +142,6 @@ class _LanguageButtonState extends State<LanguageButton> {
     );
   }
 }
-
-// @override
-// Widget build(BuildContext context) {
-//   final provider = Provider.of<LocaleProvider>(context, listen: false);
-//   return Container(
-//       color: Colors.transparent,
-//       child: ToggleButtons(
-//           isSelected: _isSelected,
-//           fillColor: _bgColor,
-//           selectedColor: _textColor,
-//           color: Colors.white,
-//           renderBorder: false,
-//           highlightColor: Colors.grey,
-//           children: <Widget>[
-//             Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 12),
-//               child: Text(
-//                 widget.languageName,
-//                 style: GoogleFonts.montserrat(
-//                   textStyle: TextStyle(
-//                     fontWeight: FontWeight.w500,
-//                     fontSize: 20,
-//                   ),
-//                 ),
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 12),
-//               child: Text(
-//                 widget.languageName,
-//                 style: GoogleFonts.montserrat(
-//                   textStyle: TextStyle(
-//                     fontWeight: FontWeight.w500,
-//                     fontSize: 20,
-//                   ),
-//                 ),
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 12),
-//               child: Text(
-//                 widget.languageName,
-//                 style: GoogleFonts.montserrat(
-//                   textStyle: TextStyle(
-//                     fontWeight: FontWeight.w500,
-//                     fontSize: 20,
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ],
-//           onPressed: (int newIndex) {
-//             int newIndex;
-//             provider.setLocale(widget.locale);
-//             setState(() {
-//               for (int index = 0; index < _isSelected.length; index++) {
-//                 if (index == newIndex) {
-//                   _isSelected[index] = true;
-//                 } else {
-//                   _isSelected[index] = false;
-//                 }
-//               }
-//             });
-//           }));
-//   }
-// }
 
 class HelpPage extends StatelessWidget {
   @override

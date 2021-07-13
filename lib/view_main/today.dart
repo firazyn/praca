@@ -1,68 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
+import 'package:geolocator/geolocator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:convert';
-
-class WeatherInfo {
-  final time;
-  final weather;
-  final image;
-  final tempMin;
-  final tempMax;
-  final temperature;
-
-  WeatherInfo({
-    this.time,
-    this.image,
-    this.weather,
-    this.tempMin,
-    this.tempMax,
-    this.temperature,
-  });
-
-  factory WeatherInfo.createInfo(Map<String, dynamic> json) {
-    return WeatherInfo(
-      time: json['dt_txt'],
-      weather: json['weather'][0]['main'],
-      temperature: json['main']['temp'],
-      tempMin: json['main']['temp_min'],
-      tempMax: json['main']['temp_max'],
-    );
-  }
-}
-
-Future<List<WeatherInfo>> fetchWeather() async {
-  final latitude = "-5.3745746";
-  final longitude = "105.2303276";
-  final apiKey = "152da546ee82e86ad057e09fa718fd85";
-  final requestUrl =
-      "http://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&units=metric&appid=$apiKey";
-
-  final response = await http.get(Uri.parse(requestUrl));
-  var jsonInfo = json.decode(response.body);
-  List<dynamic> listInfo = (jsonInfo as Map<String, dynamic>)['list'];
-  List<WeatherInfo> weatherInfo = [];
-  for (int index = 0; index <= 9; index++) {
-    weatherInfo.add(WeatherInfo.createInfo(listInfo[index]));
-  }
-
-  if (response.statusCode == 200) {
-    return weatherInfo;
-  } else {
-    throw Exception("Error loading request URL info.");
-  }
-}
-
-// factory WeatherInfo.fromJson(Map<String, dynamic> json) {
-//   return WeatherInfo(
-//       time: json['time'],
-//       weather: json['list'][0]['weather'][0]['main'],
-//       temperature: json['list'][0]['main']['temp'],
-//       tempMin: json['list'][0]['main']['temp_min'],
-//       tempMax: json['list'][0]['main']['temp_max']);
-// }
-// }
 
 class Today extends StatefulWidget {
   @override
@@ -70,19 +11,45 @@ class Today extends StatefulWidget {
 }
 
 class _TodayState extends State<Today> {
-  // Future<List<WeatherInfo>> futureWeather;
+  Future<List<dynamic>> fetchWeather() async {
+    final geo = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   futureWeather = fetchWeather();
-  // }
+    final latitude = geo.latitude.toString();
+    final longitude = geo.longitude.toString();
+    final apiKey = "152da546ee82e86ad057e09fa718fd85";
+    final requestUrl =
+        "http://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&units=metric&appid=$apiKey";
+
+    final response = await http.get(Uri.parse(requestUrl));
+    return json.decode(response.body)['list'];
+  }
+
+  _time(dynamic data) {
+    return data['dt_txt'];
+  }
+
+  _weather(dynamic data) {
+    return data['weather'][0]['main'];
+  }
+
+  _temperature(dynamic data) {
+    return data['main']['temp'];
+  }
+
+  _tempMin(dynamic data) {
+    return data['main']['temp_min'];
+  }
+
+  _tempMax(dynamic data) {
+    return data['main']['temp_max'];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Color(0xff00539c),
-      child: FutureBuilder<List<WeatherInfo>>(
+      child: FutureBuilder<List<dynamic>>(
         future: fetchWeather(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
@@ -100,18 +67,29 @@ class _TodayState extends State<Today> {
                         color: Color(0xff00539c),
                         child: Column(
                           children: [
-                            Image.asset(
-                              "assets/weather_status_icons/${snapshot.data.weather}.png",
-                              height: 60,
-                              width: 60,
+                            Text(
+                              _time(snapshot.data[index])
+                                  .toString()
+                                  .substring(11, 16),
+                              style: GoogleFonts.raleway(
+                                  textStyle: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 18,
+                                      color: Colors.white)),
+                            ),
+                            Flexible(
+                              child: Image.asset(
+                                "assets/weather_status_icons/${_weather(snapshot.data[index])}.png",
+                                height: 60,
+                                width: 60,
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(8),
                               child: Title(
                                 color: Colors.black,
                                 child: Text(
-                                  snapshot.data.temperature.toInt().toString() +
-                                      "°C",
+                                  "${_temperature(snapshot.data[index]).toInt().toString()} °C",
                                   style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
                                       fontWeight: FontWeight.w500,
@@ -122,16 +100,11 @@ class _TodayState extends State<Today> {
                                 ),
                               ),
                             ),
+                            WeatherStatus(
+                                status:
+                                    _weather(snapshot.data[index]).toString()),
                             Text(
-                              snapshot.data.weather.toString(),
-                              style: GoogleFonts.raleway(
-                                  textStyle: TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 18,
-                                      color: Colors.white)),
-                            ),
-                            Text(
-                              "Min : ${snapshot.data.tempMin.toInt().toString()} °C",
+                              "Min: ${_tempMin(snapshot.data[index]).toInt().toString()} °C",
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
                                   fontWeight: FontWeight.w500,
@@ -141,7 +114,7 @@ class _TodayState extends State<Today> {
                               ),
                             ),
                             Text(
-                              "Max : ${snapshot.data.tempMax.toInt().toString()} °C",
+                              "Max: ${_tempMax(snapshot.data[index]).toInt().toString()} °C",
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
                                   fontWeight: FontWeight.w500,
@@ -170,137 +143,44 @@ class _TodayState extends State<Today> {
   }
 }
 
-// class Today extends StatefulWidget {
-//   @override
-//   State<StatefulWidget> createState() {
-//     return _Today();
-//   }
-// }
+class WeatherStatus extends StatefulWidget {
+  final status;
 
-// class _Today extends State<Today> {
-//   final listItem = [
-//     {
-//       "time": "07.00 AM",
-//       "image": "Sunny.png",
-//       "weather": "Sunny",
-//       "temperature": "27°C"
-//     },
-//     {
-//       "time": "09.00 AM",
-//       "image": "Sunny.png",
-//       "weather": "Sunny",
-//       "temperature": "27,5°C"
-//     },
-//     {
-//       "time": "10.30 AM",
-//       "image": "Sunny.png",
-//       "weather": "Sunny",
-//       "temperature": "26°C"
-//     },
-//     {
-//       "time": "01.00 PM",
-//       "image": "Sunny.png",
-//       "weather": "Sunny",
-//       "temperature": "26,1°C"
-//     },
-//     {
-//       "time": "02.30 PM",
-//       "image": "Sunny.png",
-//       "weather": "Sunny",
-//       "temperature": "26,4°C"
-//     },
-//     {
-//       "time": "09.00 PM",
-//       "image": "Sunny.png",
-//       "weather": "Sunny",
-//       "temperature": "27,1°C"
-//     },
-//   ];
+  WeatherStatus({this.status});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return GridView.builder(
-//         itemCount: listItem.length,
-//         gridDelegate:
-//             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-//         itemBuilder: (BuildContext context, int index) {
-//           return Category(
-//             time: listItem[index]['time'],
-//             image: listItem[index]['image'],
-//             weather: listItem[index]['weather'],
-//             temperature: listItem[index]['temperature'],
-//           );
-//         });
-//   }
-// }
+  @override
+  _WeatherStatusState createState() => _WeatherStatusState();
+}
 
-// class Category extends StatelessWidget {
-// final time;
-// final weather;
-// final image;
-// final temperature;
+class _WeatherStatusState extends State<WeatherStatus> {
+  @override
+  Widget build(BuildContext context) {
+    String weatherStatus;
+    if (widget.status == 'Rain') {
+      setState(() {
+        weatherStatus = AppLocalizations.of(context).rain;
+      });
+    } else if (widget.status == 'Sunny') {
+      setState(() {
+        weatherStatus = AppLocalizations.of(context).sunny;
+      });
+    } else if (widget.status == 'Clouds') {
+      setState(() {
+        weatherStatus = AppLocalizations.of(context).clouds;
+      });
+    } else {
+      weatherStatus = widget.status;
+    }
 
-// Category({this.time, this.image, this.weather, this.temperature});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       color: Color(0xff00539c),
-//       child: Card(
-//         elevation: 0,
-//         color: Color(0xff00539c),
-//         child: Hero(
-//           tag: time,
-//           child: Material(
-//             color: Color(0xff00539c),
-//             child: InkWell(
-//               onTap: () {},
-//               child: GridTile(
-//                 child: Column(
-//                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                   children: [
-//                     Text(
-//                       this.time,
-//                       style: GoogleFonts.montserrat(
-//                         textStyle: TextStyle(
-//                           fontWeight: FontWeight.w600,
-//                           fontSize: 15,
-//                           color: Colors.white,
-//                         ),
-//                       ),
-//                     ),
-//                     Image.asset(
-//                       "assets/weather_status_icons/" + this.image,
-//                       height: 75,
-//                       width: 75,
-//                     ),
-//                     Text(
-//                       this.weather,
-//                       style: GoogleFonts.raleway(
-//                         textStyle: TextStyle(
-//                           fontWeight: FontWeight.w300,
-//                           fontSize: 20,
-//                           color: Colors.white,
-//                         ),
-//                       ),
-//                     ),
-//                     Text(
-//                       this.temperature,
-//                       style: GoogleFonts.montserrat(
-//                         textStyle: TextStyle(
-//                           fontWeight: FontWeight.w500,
-//                           fontSize: 20,
-//                           color: Colors.white,
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+    return Text(
+      weatherStatus,
+      style: GoogleFonts.raleway(
+        textStyle: TextStyle(
+          fontWeight: FontWeight.w300,
+          fontSize: 18,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}

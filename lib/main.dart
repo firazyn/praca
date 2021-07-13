@@ -7,7 +7,7 @@ import 'package:praca/view_main/menu_item.dart';
 import 'package:praca/view_main/rating_page.dart';
 import 'package:provider/provider.dart';
 import 'package:praca/view_main/7days.dart';
-import 'package:praca/view_main/todayver2.dart';
+import 'package:praca/view_main/today.dart';
 import 'package:praca/drawer.dart';
 import 'package:praca/l10n/L10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -170,11 +170,6 @@ class _HomePage extends State<HomePage> {
 
   void onSelected(BuildContext context, MenuItem item) {
     switch (item) {
-      // case MenuItems.itemSettings:
-      //   Navigator.of(context).push(
-      //     MaterialPageRoute(builder: (context) => SettingsPage()),
-      //   );
-      //   break;
       case MenuItems.itemHelp:
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => HelpPage()),
