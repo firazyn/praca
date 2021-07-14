@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/l10n/locale_provider.dart';
+import 'package:praca/splashscreen.dart';
 import 'package:praca/view_main/current.dart';
 import 'package:praca/view_main/menu_item.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          home: HomePage(),
+          home: SplashScreen(),
         );
       });
 }
