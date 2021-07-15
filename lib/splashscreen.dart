@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:praca/main.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,9 +16,9 @@ class _SplashScreen extends State<SplashScreen> {
   startSplashScreen() async {
     var duration = const Duration(seconds: 3);
     return Timer(duration, () {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (_) => HomePage()),
       );
     });
   }
@@ -33,20 +32,15 @@ class _SplashScreen extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.asset(
-              "assets/praca_icons/praca_logo.png",
-              height: 150.0,
-              width: 150.0,
-              color: Colors.white,
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 80,
+              child: Image.asset(
+                "assets/praca_icons/praca_logo.png",
+                height: 100.0,
+                width: 100.0,
+              ),
             ),
-            SizedBox(height: 24.0),
-            Text("PRACA",
-                style: GoogleFonts.montserrat(
-                    textStyle: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 40,
-                  color: Colors.white,
-                ))),
           ],
         ),
       ),
